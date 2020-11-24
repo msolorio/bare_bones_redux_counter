@@ -1,25 +1,27 @@
-import logo from './logo.svg';
+import { connect } from 'react-redux';
+import { BUTTON_CLICK } from './actions/counterActions';
 import './App.css';
 
-function App() {
+function App(props) {
+  const handleButtonClick = () => {
+    // DISPATCHES ACTION, CALLING REDUCER
+    props.dispatch(BUTTON_CLICK);
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Counter App</h1>
+      <p>Count: {props.count}</p>
+      <button onClick={handleButtonClick}>
+        +
+      </button>
     </div>
   );
 }
 
-export default App;
+// PASSES REDUX STATE AS PROPS TO APP COMPONENT
+function mapStateToProps(state) {
+  return { count: state.count };
+}
+
+export default connect(mapStateToProps)(App);
